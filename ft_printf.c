@@ -6,7 +6,7 @@
 /*   By: ewurstei <ewurstei@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:02:33 by ewurstei          #+#    #+#             */
-/*   Updated: 2022/04/25 14:57:19 by ewurstei         ###   ########.fr       */
+/*   Updated: 2022/04/25 16:14:24 by ewurstei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,21 @@ Conversion '%' : character '%'.
 
 return number of characters written. On failure, negative number is return.
 */
-struct parameters
+typedef struct s_parameters
 {
-    unsigned char   flag;
-    unsigned int    witdh;
-    double          precision;
-    unsigned char   lenght;
-    unsigned char   converter;
-} p;
+    va_list args;
+    int     witdh;
+    int     precision;
+    int     zero_pad;
+    int     dot;
+    int     force_sign;
+    int     dash;
+    int     size;
+    int     sign;
+    int     is_zero;
+    int     percentage;
+    int     space_pad;
+} t_parameters;
 
 static  ft_flags()
 {
@@ -124,15 +131,56 @@ ft_paramend()
     
 }
 
+t_parameters *ft_initialize_tab(t_print *tab)
+{
+    //tab = ft_calloc(12, 1);
+    tab.witdh = 0;
+    tab.precision = 0;
+    tab.zero_pad = 0;
+    tab.dot = 0;
+    tab.force_sign = 0;
+    tab.dash = 0;
+    tab.size = 0;
+    tab.sign = 0;
+    tab.is_zero = 0;
+    tab.percentage = 0;
+    tab.space_pad = 0;
+    return (tab);
+}
+
 int printf(const char *format, ...)
 {
-    int             i;
-    int             j;
+    int     i;
+    int     result;
+
+    t_parameters    *tab;
+    
+    tab = (t_parameters *)malloc(sizeof(t_parameters));
+    if (!tab)
+        return (-1);
+    ft_initialise_tab(tab);
+    va_start(tab->args, format);
+    i = 0;
+    while (format[i])
+    {
+        if (format[i] =='%')
+            i = ft_eval_format(tab, format, i + 1);
+        else
+            result = result + write(1, &format[i], 1);
+    }
+    va_end(tab->args);
+    result = result+tab->size;
+    free(tab);
+    return(result);
+}    
+
+/*   
     unsigned char   *paramstr;
     
     i = 0;
-    while (s[i] != '\0')
+    while (s[i] != '%')
     {
+        write(1, &s[i], 1);
         if (s[i] = "%")
             j = 0;
             while(s[i + j] != '/0')
