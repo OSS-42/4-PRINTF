@@ -6,7 +6,7 @@
 /*   By: ewurstei <ewurstei@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:02:33 by ewurstei          #+#    #+#             */
-/*   Updated: 2022/04/26 10:10:49 by ewurstei         ###   ########.fr       */
+/*   Updated: 2022/04/26 12:01:52 by ewurstei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,25 @@ static  ft_precision()
         missing spots = 0;
 }
 
-static  ft_converter()
+static void ft_conver_path(t_print *p, char *format, int pos)
 {
-    if (x = c);
-    if (x = s);
-    if (x = p);
-    if (x = i || d);
-    if (x = u);
-    if (x = x);
-    if (x = X);
-    if (x = %);    
+    if (format[pos] == 'c')
+        ft_print_char(p);
+    if (format[pos] == 's')
+        ft_print_string(p);
+    if (format[pos] == 'd' || format[pos] == 'i')
+        ft_print_integer(p);
+    if (format[pos] == 'u')
+        ft_print_unsigned(p);
+    if (format[pos] == 'x')
+        ft_print_hexamin(p);
+    if (format[pos] == 'X')
+        ft_print_hexacap(p);
+    if (format[pos] == '%')
+        ft_print_perc(p);
 }
 
-static ft_isaconverter(char c)
+static int  ft_isaconverter(char c)
 {
     if (c == "c" || c == "s" || c == "p" || c == "i" || c == "d"
         || c == "u" || c == "x" || c == "X" || c == "%")
@@ -109,7 +115,7 @@ static ft_isaconverter(char c)
     return (0);
 }
 
-static ft_flag_check(t_print *p, char *format, int pos)
+static int  ft_flag_check(t_print *p, char *format, int pos)
 {
     while (format)
     {
@@ -117,7 +123,11 @@ static ft_flag_check(t_print *p, char *format, int pos)
         {
             if (format[pos] == '.')
             {
-                p->dot = 1;
+                if (ft_isdigit(format[pos + 1] != 1)
+                    p->dot = 1;
+                    p->precision = format[pos + 1];
+                if ()
+                p->dot = 2;
                 pos++;
             }
             if (format[pos] == '-')
@@ -148,7 +158,7 @@ static ft_flag_check(t_print *p, char *format, int pos)
                 pos++;
             }
             if (ft_isaconverter(format[pos]) == 1)
-                ft_conversion();
+                ft_conver_path(p, format, pos);
             return (-1);
         }
     }
