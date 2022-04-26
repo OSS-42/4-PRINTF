@@ -6,11 +6,12 @@
 /*   By: ewurstei <ewurstei@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:02:33 by ewurstei          #+#    #+#             */
-/*   Updated: 2022/04/25 16:14:24 by ewurstei         ###   ########.fr       */
+/*   Updated: 2022/04/26 10:10:49 by ewurstei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+#include <stdarg.h> //pour fonction variadique
 
 /* Vous devez gérer les conversions suivantes : cspdiuxX%
 
@@ -53,6 +54,7 @@ Conversion '%' : character '%'.
 
 return number of characters written. On failure, negative number is return.
 */
+
 typedef struct s_parameters
 {
     va_list args;
@@ -62,21 +64,13 @@ typedef struct s_parameters
     int     dot;
     int     force_sign;
     int     dash;
+    int     square;
     int     size;
     int     sign;
     int     is_zero;
     int     percentage;
     int     space_pad;
 } t_parameters;
-
-static  ft_flags()
-{
-    if x = '-';
-    if x = '0';
-    if x = '#';
-    if x = '+';
-    if x = ' ';
-}
 
 static ft_witdh()
 {
@@ -107,99 +101,106 @@ static  ft_converter()
     if (x = %);    
 }
 
-ft_parameters()
+static ft_isaconverter(char c)
 {
-    struct parameters p;
-    p.flag = 0;
+    if (c == "c" || c == "s" || c == "p" || c == "i" || c == "d"
+        || c == "u" || c == "x" || c == "X" || c == "%")
+        return (1);
+    return (0);
+}
+
+static ft_flag_check(t_print *p, char *format, int pos)
+{
+    while (format)
+    {
+        while (ft_isaconverter(format[pos]) != 1)
+        {
+            if (format[pos] == '.')
+            {
+                p->dot = 1;
+                pos++;
+            }
+            if (format[pos] == '-')
+            {
+                p->dash = 1;
+                p->zero.pad = 0;
+                pos++;
+            }
+            if (format[pos] == '#')
+            {
+                p->square = 1;
+                pos++;
+            }
+            if (format[pos] == '0' && p.dash == 0 && p.precision == 0)
+            {
+                p->zero.pad = 1;
+                pos++;
+            }
+            if (format[pos] == ' ')
+            {
+                p->space_pad = 1;
+                pos++;
+            }
+            if (format[pos] == '+')
+            {
+                p->force_sign = 1;
+                p->space_pad = 0;
+                pos++;
+            }
+            if (ft_isaconverter(format[pos]) == 1)
+                ft_conversion();
+            return (-1);
+        }
+    }
+}
+
+t_parameters *ft_param_init(t_print *p)
+{
+    //tab = ft_calloc(13, 1);
     p.witdh = 0;
     p.precision = 0;
-    p.lenght = 0;
-    p.converter = 0;
-    
-    if (s[1] = '-' || '0' || '#' || '+' || ' ')
-        p.flag = 1;
-    if (s[2] = 0-9) ==> ON/OFF
-        p.witdh = 1;
-    if (s[3&4] = .0-9) ==> ON/OFF
-        p.precision = 1;
-    if (s[5] = c/s/p/d/i/u/x/X/%) ==> ON/OFF
-        p.converter = 1;
-}
-
-ft_paramend()
-{
-    
-}
-
-t_parameters *ft_initialize_tab(t_print *tab)
-{
-    //tab = ft_calloc(12, 1);
-    tab.witdh = 0;
-    tab.precision = 0;
-    tab.zero_pad = 0;
-    tab.dot = 0;
-    tab.force_sign = 0;
-    tab.dash = 0;
-    tab.size = 0;
-    tab.sign = 0;
-    tab.is_zero = 0;
-    tab.percentage = 0;
-    tab.space_pad = 0;
-    return (tab);
+    p.zero_pad = 0;
+    p.dot = 0;
+    p.force_sign = 0;
+    p.dash = 0;
+    p.square = 0;
+    p.size = 0;
+    p.sign = 0;
+    p.is_zero = 0;
+    p.percentage = 0;
+    p.space_pad = 0;
+    return (p);
 }
 
 int printf(const char *format, ...)
 {
-    int     i;
-    int     result;
-
-    t_parameters    *tab;
+    int             i;
+    int             result;
+    t_parameters    *p;
     
-    tab = (t_parameters *)malloc(sizeof(t_parameters));
-    if (!tab)
+    p = (t_parameters *)malloc(sizeof(t_parameters));
+    if (!p)
         return (-1);
-    ft_initialise_tab(tab);
-    va_start(tab->args, format);
+    ft_param_init(tab);
+    va_start(p->args, format);
     i = 0;
     while (format[i])
     {
-        if (format[i] =='%')
-            i = ft_eval_format(tab, format, i + 1);
+        if (format[i] == '%')
+            i = ft_flag_check(p, format, i + 1);
         else
             result = result + write(1, &format[i], 1);
     }
-    va_end(tab->args);
-    result = result+tab->size;
-    free(tab);
+    va_end(p->args);
+    result = result+p->size;
+    free(p);
     return(result);
 }    
-
-/*   
-    unsigned char   *paramstr;
-    
-    i = 0;
-    while (s[i] != '%')
-    {
-        write(1, &s[i], 1);
-        if (s[i] = "%")
-            j = 0;
-            while(s[i + j] != '/0')
-            {
-                j++;
-                if (ft_paramend(s[i + j]) == 1)
-                    paramstr = ft_substr(s, i, j);
-            }
-        ft_strtrim (start : %, end : c/s/p/d/i/u/x/X/%)
-        ft_parameters (s trimmé)
-    }
-}
 
 int main()
 {
     char    c = "S";
     char    s = "OSS 117 - Alerte Rouge en Afrique Noire !";
     int     i = 117;
-    char    *p = s;
-    
-    
+    char    *p = s;    
 }
