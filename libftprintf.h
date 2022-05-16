@@ -6,26 +6,27 @@
 /*   By: ewurstei <ewurstei@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:00:32 by ewurstei          #+#    #+#             */
-/*   Updated: 2022/05/03 16:36:03 by ewurstei         ###   ########.fr       */
+/*   Updated: 2022/05/16 12:07:52 by ewurstei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINT_H
+#ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include <stdint.h>
-# include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdint.h>
+#include <stdarg.h>
+#include "libft/libft.h"
 
 typedef struct s_parameters
 {
     va_list args;
     int     size;
     int     percentage;
-    int     sign;
+    int     neg;
     int     square;
     int     space;
     int     plus;
@@ -33,7 +34,7 @@ typedef struct s_parameters
 
 int		ft_printf(const char *, ...);
 void	ft_print_char(t_parameters *p);
-void	ft_print_string(t_parameters *p, char *input, int pos);
-void	ft_print_integer(t_parameters *p, char *input, int pos);
+void	ft_print_string(t_parameters *p);
+void	ft_print_integer(t_parameters *p);
 
 #endif

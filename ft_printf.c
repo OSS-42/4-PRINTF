@@ -6,61 +6,64 @@
 /*   By: ewurstei <ewurstei@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:02:33 by ewurstei          #+#    #+#             */
-/*   Updated: 2022/05/03 16:28:00 by ewurstei         ###   ########.fr       */
+/*   Updated: 2022/05/16 12:14:58 by ewurstei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdarg.h>
 
 static void ft_conver_path(t_parameters *p, char *input, int pos)
 {
     if (input[pos] == 'c')
-        ft_print_char(p);
+        ft_print_char(p);    
     if (input[pos] == 's')
-        ft_print_string(p, input, pos);
+        ft_print_string(p);
     if (input[pos] == 'd' || input[pos] == 'i')
         ft_print_integer(p);
-    if (input[pos] == 'u')
+    /*if (input[pos] == 'u')
         ft_print_unsigned(p);
     if (input[pos] == 'x')
         ft_print_hexamin(p);
     if (input[pos] == 'X')
         ft_print_hexacap(p);
     if (input[pos] == '%')
-        ft_print_perc(p);
+        ft_print_perc(p);*/
+    //return (pos);
 }
 
 static int  ft_isaconverter(char c)
 {
-    if (c == "c" || c == "s" || c == "p" || c == "i" || c == "d"
-        || c == "u" || c == "x" || c == "X" || c == "%")
+    if (c == 'c' || c == 's' || c == 'p' || c == 'i' || c == 'd'
+        || c == 'u' || c == 'x' || c == 'X' || c == '%')
         return (1);
     return (0);
 }
 
 static int ft_check_input (t_parameters *p, char *input, int pos)
 {
-    while(ft_isaconverter(input[pos] != 1))
+    while (ft_isaconverter(input[pos] != 1))
     {
         if (input[pos] == '#')
         {
             p->square = 1;
-            pos++;
+            pos++;                                          
         }
         if (input[pos] == ' ')
         {
-            p->space = 1;
+            if  (p->plus == 1)
+                p->space = 0;
+            else
+                p->space = p->space + 1;
             pos++;
         }
         if (input[pos] == '+')
         {
             p->plus = 1;
+            p->space = 0;
             pos++;
-        }
-        else    
-            ft_conver_path(p, input, pos);
+        }    
     }
+    ft_conver_path(p, input, pos);
     return (pos);
 }
 
@@ -83,19 +86,15 @@ int ft_printf(const char *input, ...)
     t_parameters    *p;
 
     if (input == NULL)
-        return (NULL);
-    p = (t_parameters *)malloc(sizeof(t_parameters));
-    if (!p)
-        return (-1);
-    //ft_param_init(p);
-    p = ft_calloc(6, 1);
-    va_start(p->args,input);
+        return (0);
+    p = ft_calloc(sizeof(t_parameters), 1);
+    va_start(p->args, input);
     i = -1;
     len = 0;
     while (input[++i])
     {
         if (input[i] == '%')
-            i = ft_check_input(p, input, i + 1);
+            i = ft_check_input(p, (char *)input, i + 1);
         else
             len = len + write(1, &input[i], 1);          
     }
@@ -107,11 +106,17 @@ int ft_printf(const char *input, ...)
 
 int main()
 {
-    char    c = "S";
-    char    s = "OSS 117 - Alerte Rouge en Afrique Noire !";
-    int     i = 117;
-    char    *p = s;    
-    ft_printf("Voici le resultat :% s\n", s);
-    printf("Voici le resultat :% s\n", s);
+    int     resultmine;
+    int     resultreal;
+    char    c;
+    char    s[] = "OSS 117 - Alerte Rouge en Afrique Noire !";
+    int     i = -42;
+    char    *p = s;
+    
+    c = '5';    
+    resultmine = ft_printf("Voici le resultat (mine): | %+i |\n", i);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): | %+i |\n", i);
+    printf("result (real) : %d\n", resultreal);
     return (0);
 }
