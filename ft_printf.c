@@ -20,14 +20,16 @@ static void ft_conver_path(t_parameters *p, char *input, int pos)
         ft_print_string(p);
     if (input[pos] == 'd' || input[pos] == 'i')
         ft_print_integer(p);
-    /*if (input[pos] == 'u')
+    if (input[pos] == 'u')
         ft_print_unsigned(p);
     if (input[pos] == 'x')
-        ft_print_hexamin(p);
+        ft_print_hexa(p, 16, "0123456789abcdef");
     if (input[pos] == 'X')
-        ft_print_hexacap(p);
-    if (input[pos] == '%')
-        ft_print_perc(p);*/
+        ft_print_hexa(p, 16, "0123456789ABCDEF");
+    /*if (input[pos] == '%')
+        ft_print_perc(p);
+    if (input[pos] == 'p')
+        ft_print_hexa(p, 16, "0123456789abcdef"*/
     //return (pos);
 }
 
@@ -41,7 +43,7 @@ static int  ft_isaconverter(char c)
 
 static int ft_check_input (t_parameters *p, char *input, int pos)
 {
-    while (ft_isaconverter(input[pos] != 1))
+    while (ft_isaconverter(input[pos]) != 1)
     {
         if (input[pos] == '#')
         {
@@ -66,18 +68,6 @@ static int ft_check_input (t_parameters *p, char *input, int pos)
     ft_conver_path(p, input, pos);
     return (pos);
 }
-
-/*t_parameters *ft_param_init(t_parameters *p)
-{
-    //p = ft_calloc(6, 1);
-    p->size = 0;
-    p->sign = 0;
-    p->square = 0;
-    p->percentage = 0;
-    p->space = 0;
-    p->plus = 0;
-    //return (p);
-}*/
 
 int ft_printf(const char *input, ...)
 {
@@ -111,12 +101,57 @@ int main()
     char    c;
     char    s[] = "OSS 117 - Alerte Rouge en Afrique Noire !";
     int     i = -42;
+    int     j = 42;
+    int     k = -2147483648;
+    unsigned int    l = 4294967295;
+    unsigned int    m = 0xfafa;
     char    *p = s;
     
-    c = '5';    
-    resultmine = ft_printf("Voici le resultat (mine): | %+i |\n", i);
+    c = 'S';    
+    printf("-------CHAR------\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%c|\n", c);
     printf("result (mine) : %d\n", resultmine);
-    resultreal = printf("Voici le resultat (real): | %+i |\n", i);
+    resultreal = printf("Voici le resultat (real): |%c|\n", c);
+    printf("result (real) : %d\n", resultreal);
+    printf("-------STRING------\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%s|\n", s);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%s|\n", s);
+    printf("result (real) : %d\n", resultreal);
+    printf("-------INT------\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%i|\n", i);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%i|\n", i);
+    printf("result (real) : %d\n", resultreal);
+    printf("-------SPACE-------\n");
+    resultmine = ft_printf("Voici le resultat (mine): |% i|\n", j);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |% i|\n", j);
+    printf("result (real) : %d\n", resultreal);
+    printf("--------SIGN-----\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%+i|\n", j);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%+i|\n", j);
+    printf("result (real) : %d\n", resultreal);
+    printf("--------INT_MIN-----\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%i|\n", k);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%i|\n", k);
+    printf("result (real) : %d\n", resultreal);
+    printf("-------UINT_MAX----\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%u|\n", l);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%u|\n", l);
+    printf("result (real) : %d\n", resultreal);
+    printf("-------HEXAMIN----\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%u|\n", l);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%u|\n", l);
+    printf("result (real) : %d\n", resultreal);    
+    printf("-------HEXACAP----\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%u|\n", l);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%u|\n", l);
     printf("result (real) : %d\n", resultreal);
     return (0);
 }

@@ -36,5 +36,7 @@ int		ft_printf(const char *, ...);
 void	ft_print_char(t_parameters *p);
 void	ft_print_string(t_parameters *p);
 void	ft_print_integer(t_parameters *p);
+void    ft_print_unsigned(t_parameters *p);
+void    ft_printf_hexa(t_parameters *p, int divider, char *base);
 
 #endif

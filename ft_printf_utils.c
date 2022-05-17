@@ -67,20 +67,54 @@ void	ft_print_string(t_parameters *p)
 void	ft_print_integer(t_parameters *p)
 {
 	long	i;
-	char	*s;
-	int		j;
 	
 	i = va_arg(p->args, int);
 	if (i < 0)
+	{
 		p->neg = 1;
-	j = 0;
-	if (p->plus == 1 && p->neg == 1)
-	{	
-		s = ft_itoa(i);
-		while (s[j])
-		{
-			p->size = p->size + write(1, &s[j],1);
-			j++;
-		}
+		p->space = 0;
 	}
+	if (p->plus == 1 && p->neg == 0)
+		p->size = p->size + write(1, "+", 1);
+	if (p->space == 1)
+		p->size = p->size + write(1, " ", 1);
+	ft_putnbr_fd(i, 1);
+	p->size = p->size + ft_size(i);
+}
+
+void	ft_print_unsigned(t_parameters *p)
+{
+	unsigned long	i;
+	char			*j;
+	int				len;
+
+	i = va_arg(p->args, unsigned int);
+	len = ft_size(i);
+	j = (char *)malloc(sizeof(char) * len + 1);
+	if (!j)
+		return ;
+	j[len] = '\0';
+	p->size = p->size + len;
+	while (len--)
+	{
+		j[len] = i % 10 + 48;
+		ft_putstr_fd(j, 1);
+		i = i / 10;
+	}
+	free(j);
+}
+
+void	ft_print_hexa(t_parameters *p, int divider, char *base)
+{
+	unsigned long	i;
+	char *j;
+	int len;
+	
+	i = va_arg(p->args, unsigned int);
+	len = ft_size(i);
+	j = (char *)malloc(sizeof(char) * len + 1);
+	if (!j)
+		return ;
+	j[len] = '\0';
+	p->size = p->size
 }
