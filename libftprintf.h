@@ -27,6 +27,7 @@ typedef struct s_parameters
     int     size;
     int     percentage;
     int     neg;
+    int     hexcap;
     int     square;
     int     space;
     int     plus;
@@ -37,6 +38,6 @@ void	ft_print_char(t_parameters *p);
 void	ft_print_string(t_parameters *p);
 void	ft_print_integer(t_parameters *p);
 void    ft_print_unsigned(t_parameters *p);
-void    ft_printf_hexa(t_parameters *p, int divider, char *base);
+void    ft_print_uhextoa(t_parameters *p, int divider, char *base);
 
 #endif

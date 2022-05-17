@@ -82,7 +82,7 @@ void	ft_print_integer(t_parameters *p)
 	p->size = p->size + ft_size(i);
 }
 
-void	ft_print_unsigned(t_parameters *p)
+void	ft_print_uhextoa(t_parameters *p, int divider, char *base)
 {
 	unsigned long	i;
 	char			*j;
@@ -95,26 +95,15 @@ void	ft_print_unsigned(t_parameters *p)
 		return ;
 	j[len] = '\0';
 	p->size = p->size + len;
+	if(p->square == 1 && i != 0 && p->hexcap == 0)
+		p->size = p->size + write(1, "0x", 2); 
+	if(p->square == 1 && i != 0 && p->hexcap == 1)
+		p->size = p->size + write(1, "0X", 2); 
 	while (len--)
 	{
-		j[len] = i % 10 + 48;
+		j[len] = base[i % divider];
 		ft_putstr_fd(j, 1);
-		i = i / 10;
-	}
+		i = i / divider;
+	}	
 	free(j);
-}
-
-void	ft_print_hexa(t_parameters *p, int divider, char *base)
-{
-	unsigned long	i;
-	char *j;
-	int len;
-	
-	i = va_arg(p->args, unsigned int);
-	len = ft_size(i);
-	j = (char *)malloc(sizeof(char) * len + 1);
-	if (!j)
-		return ;
-	j[len] = '\0';
-	p->size = p->size
 }

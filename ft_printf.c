@@ -21,15 +21,18 @@ static void ft_conver_path(t_parameters *p, char *input, int pos)
     if (input[pos] == 'd' || input[pos] == 'i')
         ft_print_integer(p);
     if (input[pos] == 'u')
-        ft_print_unsigned(p);
+        ft_print_uhextoa(p, 10, "0123456789");
     if (input[pos] == 'x')
-        ft_print_hexa(p, 16, "0123456789abcdef");
+        ft_print_uhextoa(p, 16, "0123456789abcdef");
     if (input[pos] == 'X')
-        ft_print_hexa(p, 16, "0123456789ABCDEF");
-    /*if (input[pos] == '%')
-        ft_print_perc(p);
-    if (input[pos] == 'p')
-        ft_print_hexa(p, 16, "0123456789abcdef"*/
+    {
+        ft_print_uhextoa(p, 16, "0123456789ABCDEF");
+        p->hexcap = 1;
+    }
+    /*if (input[pos] == 'p')
+        ft_print_hexa(p, 16, "0123456789abcdef"
+    if (input[pos] == '%')
+        ft_print_perc(p);*/
     //return (pos);
 }
 
@@ -105,6 +108,8 @@ int main()
     int     k = -2147483648;
     unsigned int    l = 4294967295;
     unsigned int    m = 0xfafa;
+    unsigned int    n = 42;
+    unsigned int    o = 0;
     char    *p = s;
     
     c = 'S';    
@@ -144,14 +149,32 @@ int main()
     resultreal = printf("Voici le resultat (real): |%u|\n", l);
     printf("result (real) : %d\n", resultreal);
     printf("-------HEXAMIN----\n");
-    resultmine = ft_printf("Voici le resultat (mine): |%u|\n", l);
+    resultmine = ft_printf("Voici le resultat (mine): |%x|\n", m);
     printf("result (mine) : %d\n", resultmine);
-    resultreal = printf("Voici le resultat (real): |%u|\n", l);
+    resultreal = printf("Voici le resultat (real): |%x|\n", m);
     printf("result (real) : %d\n", resultreal);    
     printf("-------HEXACAP----\n");
-    resultmine = ft_printf("Voici le resultat (mine): |%u|\n", l);
+    resultmine = ft_printf("Voici le resultat (mine): |%X|\n", m);
     printf("result (mine) : %d\n", resultmine);
-    resultreal = printf("Voici le resultat (real): |%u|\n", l);
+    resultreal = printf("Voici le resultat (real): |%X|\n", m);
+    printf("result (real) : %d\n", resultreal);
+    printf("-------INT TO HEXA ----\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%x|\n", n);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%x|\n", n);
+    printf("result (real) : %d\n", resultreal);
+    resultmine = ft_printf("Voici le resultat (mine): |%x|\n", l);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%x|\n", l);
+    printf("result (real) : %d\n", resultreal);
+    printf("-------DASH HEXA ----\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%#x|\n", n);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%#x|\n", n);
+    printf("result (real) : %d\n", resultreal);    
+    resultmine = ft_printf("Voici le resultat (mine): |%#x|\n", o);
+    printf("result (mine) : %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%#x|\n", o);
     printf("result (real) : %d\n", resultreal);
     return (0);
 }
