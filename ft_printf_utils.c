@@ -23,9 +23,7 @@ x = va_arg(args, unsigned int)
 X = va_arg(args, unsigned int)
 */
 
-static int	ft_size(long nb);
-
-int	ft_size(long nb)
+static int	ft_size(long nb, int divider)
 {
 	int	count;
 
@@ -35,9 +33,9 @@ int	ft_size(long nb)
 		nb = nb * -1;
 		count++;
 	}
-	while (nb / 10 > 0)
+	while (nb / divider > 0)
 	{
-		nb = nb / 10;
+		nb = nb / divider;
 		count++;
 	}
 	return (count);
@@ -79,26 +77,29 @@ void	ft_print_integer(t_parameters *p)
 	if (p->space == 1)
 		p->size = p->size + write(1, " ", 1);
 	ft_putnbr_fd(i, 1);
-	p->size = p->size + ft_size(i);
+	p->size = p->size + ft_size(i, 10);
 }
 
-void	ft_print_uhextoa(t_parameters *p, int divider, char *base)
+void	ft_print_uhexptoa(t_parameters *p, int divider, char *base)
 {
 	unsigned long	i;
 	char			*j;
 	int				len;
 
-	i = va_arg(p->args, unsigned int);
-	len = ft_size(i);
+	if (p->pointer == 1)
+		i = (unsigned long)va_arg(p->args, void *);
+	else
+		i = va_arg(p->args, unsigned int);
+	len = ft_size(i, divider);
 	j = (char *)malloc(sizeof(char) * len + 1);
 	if (!j)
 		return ;
 	j[len] = '\0';
-	p->size = p->size + len;
-	if(p->square == 1 && i != 0 && p->hexcap == 0)
+	if((p->square == 1 && i != 0 && p->hexcap == 0) || p->pointer == 1)
 		p->size = p->size + write(1, "0x", 2); 
 	if(p->square == 1 && i != 0 && p->hexcap == 1)
 		p->size = p->size + write(1, "0X", 2); 
+	p->size = p->size + len;
 	while (len--)
 	{
 		j[len] = base[i % divider];
