@@ -29,6 +29,7 @@ typedef struct s_parameters
     int     neg;
     int     hexcap;
     int     pointer;
+    int     perc;
     int     square;
     int     space;
     int     plus;
