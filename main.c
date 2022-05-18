@@ -26,8 +26,9 @@ int main()
     unsigned int    n = 42;
     unsigned int    o = 0;
 	unsigned long	p = 42;
-	unsigned long	*test = &p;
-    
+	unsigned long	*test1 = &p;
+    void *test2 = (void*)0xffffffffffffffff;
+
     c = 'S';    
     printf("-------CHAR------\n");
     resultmine = ft_printf("Voici le resultat (mine): |%c|", c);
@@ -93,9 +94,13 @@ int main()
     resultreal = printf("Voici le resultat (real): |%#x|", o);
     printf(" - %d\n", resultreal);
 	printf("-------POINTER----\n");
-    resultmine = ft_printf("Voici le resultat (mine): |%p|", (void *) test);
+    resultmine = ft_printf("Voici le resultat (mine): |%p|", test1);
     printf(" - %d\n", resultmine);
-    resultreal = printf("Voici le resultat (real): |%p|", (void *) test);
+    resultreal = printf("Voici le resultat (real): |%p|", test1);
+    printf(" - %d\n", resultreal);  
+    resultmine = ft_printf("Voici le resultat (mine): |%p|", test2);
+    printf(" - %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%p|", test2);
     printf(" - %d\n", resultreal);  
     printf("-------PERCENT----\n");
     resultmine = ft_printf("Voici le resultat (mine): |%%|");

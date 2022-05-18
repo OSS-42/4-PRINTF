@@ -86,11 +86,14 @@ void	ft_print_integer(t_parameters *p)
 
 void	ft_print_uhexptoa(t_parameters *p, int divider, char *base)
 {
-	unsigned long	i;
-	char			*j;
-	int				len;
+	unsigned long long	i;
+	char				*j;
+	int					len;
 
-	i = va_arg(p->args, unsigned long);
+	if (p->pointer == 1)
+		i = va_arg(p->args, uintptr_t);
+	else
+		i = va_arg(p->args, unsigned long);
 	len = ft_size(i, divider);
 	j = (char *)malloc(sizeof(char) * len + 1);
 	if (!j)

@@ -1,35 +1,49 @@
 NAME = libftprintf.a
+LIBFT = libft.a
+LDIR = libft/
 
-#========== .c pour printf ==========#
-... = ft_printf.c 
+SRC = ft_printf.c ft_printf_utils.c
 
 CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra -c
+CFLAGSTEST = -Wall -Werror -Wextra -o
 
 RM = rm -f
 
 AR = ar rcs
 
-.... = $(...:.c=.o)
+OBJ = $(SRC:.c=.o)
 
-LIBCOBJ = xxx.o
+all:	$(LDIR)/$(LIBFT) $(NAME)
 
-#========== archiver ft_ libft.h utilisées ==========#
+$(NAME): $(OBJ) $(LDIR)/$(LIBFT)
+	$(CC) $(CFLAGS) $(SRC)
+	$(AR) $(NAME) $(OBJ)
 
-all:	$(NAME)
+$(LDIR)/$(LIBFT):
+	$(MAKE) -C $(LDIR)
 
-$(NAME): $(...)
-	$(CC) $(CFLAGS) $(...)
-	$(AR) $(NAME) $(....) + #libft srcs
+test1: $(LDIR)/$(LIBFT)
+	clear
+	$(CC) $(CFLAGSTEST) test $(SRC) main.c $(LDIR)$(LIBFT)
+	./test
+	$(RM) test
+
+test2: $(LDIR)/$(LIBFT)
+	clear
+	$(CC) $(CFLAGSTEST) test $(SRC) test_printf.c $(LDIR)$(LIBFT)
+	./test
+	$(RM) test
 
 clean:
-	$(RM) $(...) $(....)
-	cd libft && clean -s
+	$(RM) $(OBJ)
+	$(RM) $(LDIR)*.o
 
 fclean: clean
 	$(RM) $(NAME)
-	cd libft && fclean -s
+	$(RM) $(LDIR)$(LIBFT)
+	$(RM) *.o
 
 re: fclean all
 
