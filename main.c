@@ -97,5 +97,10 @@ int main()
     printf(" - %d\n", resultmine);
     resultreal = printf("Voici le resultat (real): |%p|", (void *) test);
     printf(" - %d\n", resultreal);  
+    printf("-------PERCENT----\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%%|");
+    printf(" - %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%%|");
+    printf(" - %d\n", resultreal);  
     return (0);
 }

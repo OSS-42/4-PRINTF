@@ -25,7 +25,7 @@ X = va_arg(args, unsigned int)
 
 static int	ft_size(long nb, int divider)
 {
-	int	count;
+	long	count;
 
 	count = 1;
 	if (nb < 0)
@@ -44,8 +44,12 @@ static int	ft_size(long nb, int divider)
 void	ft_print_char(t_parameters *p)
 {
 	char	c;
+
 	c = (char) va_arg(p->args, int);
-	p->size = p->size + write(1, &c, 1);
+	if (p->perc == 1)
+		p->size = p->size + write(1, "%", 1);
+	else
+		p->size = p->size + write(1, &c, 1);
 }
 
 void	ft_print_string(t_parameters *p)
@@ -86,18 +90,15 @@ void	ft_print_uhexptoa(t_parameters *p, int divider, char *base)
 	char			*j;
 	int				len;
 
-	if (p->pointer == 1)
-		i = (unsigned long)va_arg(p->args, void *);
-	else
-		i = va_arg(p->args, unsigned int);
+	i = va_arg(p->args, unsigned long);
 	len = ft_size(i, divider);
 	j = (char *)malloc(sizeof(char) * len + 1);
 	if (!j)
 		return ;
 	j[len] = '\0';
-	if((p->square == 1 && i != 0 && p->hexcap == 0) || p->pointer == 1)
+	if ((p->square == 1 && i != 0 && p->hexcap == 0) || p->pointer == 1)
 		p->size = p->size + write(1, "0x", 2); 
-	if(p->square == 1 && i != 0 && p->hexcap == 1)
+	if (p->square == 1 && i != 0 && p->hexcap == 1)
 		p->size = p->size + write(1, "0X", 2); 
 	p->size = p->size + len;
 	while (len--)

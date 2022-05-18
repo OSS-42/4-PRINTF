@@ -26,16 +26,19 @@ static void ft_conver_path(t_parameters *p, char *input, int pos)
         ft_print_uhexptoa(p, 16, "0123456789abcdef");
     if (input[pos] == 'X')
     {
-        ft_print_uhexptoa(p, 16, "0123456789ABCDEF");
         p->hexcap = 1;
+        ft_print_uhexptoa(p, 16, "0123456789ABCDEF");
     }
     if (input[pos] == 'p')
     {
-        ft_print_uhexptoa(p, 16, "0123456789abcdef");
         p->pointer = 1;
+        ft_print_uhexptoa(p, 16, "0123456789abcdef");
     }
-    /*if (input[pos] == '%')
-        ft_print_perc(p);*/
+    if (input[pos] == '%')
+    {
+        p->perc = 1;
+        ft_print_char(p);
+    }
 }
 
 static int  ft_isaconverter(char c)
@@ -60,7 +63,7 @@ static int ft_check_input (t_parameters *p, char *input, int pos)
             if  (p->plus == 1)
                 p->space = 0;
             else
-                p->space = p->space + 1;
+                p->space = 1;
             pos++;
         }
         if (input[pos] == '+')
