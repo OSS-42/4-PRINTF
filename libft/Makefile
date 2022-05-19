@@ -27,14 +27,14 @@ OBJBON = $(LIBCBON:.c=.o)
 all:	$(NAME)
 
 $(NAME): $(OBJFUN)
-	$(CC) $(CFLAGS) $(LIBCFUN)
-	$(AR) $(NAME) $(OBJFUN)
+	@$(CC) $(CFLAGS) $(LIBCFUN)
+	@$(AR) $(NAME) $(OBJFUN)
 
 clean:
-	$(RM) $(OBJFUN) $(OBJBON)
+	@$(RM) $(OBJFUN) $(OBJBON)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 
@@ -45,8 +45,8 @@ re: fclean all
 #============================================================#
 
 bonus: $(NAME) $(OBJFUN)
-	$(CC) $(CFLAGS) $(LIBCBON)
-	$(AR) $(NAME) $(OBJBON)
+	@$(CC) $(CFLAGS) $(LIBCBON)
+	@$(AR) $(NAME) $(OBJBON)
 
 .PHONY: all clean fclean re bonus
 

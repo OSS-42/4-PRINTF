@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libprintf.h"
 
 static int	ft_size(long nb, int divider)
 {
@@ -30,19 +30,6 @@ static int	ft_size(long nb, int divider)
 	return (count);
 }
 
-static int	ft_size_ptr(uintptr_t nb)
-{
-	long	count;
-
-	count = 1;
-	while (nb / 16 > 0)
-	{
-		nb = nb / 16;
-		count ++;
-	}
-	return (count);
-}
-
 void	ft_print_char(t_parameters *p)
 {
 	char	c;
@@ -58,7 +45,7 @@ void	ft_print_string(t_parameters *p)
 {
 	char	*s;
 	int		i;
-	
+
 	s = va_arg(p->args, char *);
 	i = 0;
 	while (s[i])
@@ -71,7 +58,7 @@ void	ft_print_string(t_parameters *p)
 void	ft_print_integer(t_parameters *p)
 {
 	long	i;
-	
+
 	i = va_arg(p->args, int);
 	if (i < 0)
 	{
@@ -99,9 +86,9 @@ void	ft_print_uhextoa(t_parameters *p, int divider, char *base)
 		return ;
 	j[len] = '\0';
 	if (p->square == 1 && i != 0 && p->hexcap == 0)
-		p->size = p->size + write(1, "0x", 2); 
+		p->size = p->size + write(1, "0x", 2);
 	if (p->square == 1 && i != 0 && p->hexcap == 1)
-		p->size = p->size + write(1, "0X", 2); 
+		p->size = p->size + write(1, "0X", 2);
 	p->size = p->size + len;
 	while (len--)
 	{
@@ -109,27 +96,5 @@ void	ft_print_uhextoa(t_parameters *p, int divider, char *base)
 		ft_putstr_fd(j, 1);
 		i = i / divider;
 	}	
-	free(j);
-}
-
-void	ft_print_ptoa(t_parameters *p, char *base)
-{
-	uintptr_t	i;
-	char 		*j;
-	int			len;
-
-	i = va_arg(p->args, uintptr_t);
-	len = ft_size_ptr(i);
-	j = (char *)malloc(sizeof(char) * len + 1);
-	if (!j)
-		return ;
-	j[len] = '\0';
-	p->size = p->size + write(1, "0x", 2) + len;
-	while (len--)
-	{
-		j[len] = base[i % 16];
-		ft_putstr_fd(j, 1);
-		i = i / 16;
-	}
 	free(j);
 }
