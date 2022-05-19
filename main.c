@@ -32,6 +32,7 @@ int main()
     int     r = -1;
     int     t = 1;
     int     u = 2147483647;
+    unsigned long long  v = UINT64_MAX;
  
     printf("-------CHAR------\n");
     resultmine = ft_printf("Voici le resultat (mine): |%c|", c);
@@ -143,6 +144,10 @@ int main()
     resultmine = ft_printf("Voici le resultat (mine): |%#s|", s);
     printf(" - %d\n", resultmine);
     resultreal = printf("Voici le resultat (real): |%#s|", s);
-    printf(" - %d\n", resultreal);  
+    printf(" - %d\n", resultreal);
+    resultmine = ft_printf("Voici le resultat (mine): |%d|", v);
+    printf(" - %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%lld|", v);
+    printf(" - %d\n", resultreal);   
     return (0);
 }
