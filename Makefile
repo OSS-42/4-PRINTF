@@ -7,7 +7,7 @@ SRC = ft_printf.c ft_printf_utils.c
 CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra -c
-CFLAGSTEST = -Wall -Werror -Wextra -o
+CFLAGSTEST = -o
 
 RM = rm -f
 

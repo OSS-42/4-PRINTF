@@ -21,19 +21,16 @@ static void ft_conver_path(t_parameters *p, char *input, int pos)
     if (input[pos] == 'd' || input[pos] == 'i')
         ft_print_integer(p);
     if (input[pos] == 'u')
-        ft_print_uhexptoa(p, 10, "0123456789");
+        ft_print_uhextoa(p, 10, "0123456789");
     if (input[pos] == 'x')
-        ft_print_uhexptoa(p, 16, "0123456789abcdef");
+        ft_print_uhextoa(p, 16, "0123456789abcdef");
     if (input[pos] == 'X')
     {
         p->hexcap = 1;
-        ft_print_uhexptoa(p, 16, "0123456789ABCDEF");
+        ft_print_uhextoa(p, 16, "0123456789ABCDEF");
     }
     if (input[pos] == 'p')
-    {
-        p->pointer = 1;
-        ft_print_uhexptoa(p, 16, "0123456789abcdef");
-    }
+        ft_print_ptoa(p, "0123456789abcdef");
     if (input[pos] == '%')
     {
         p->perc = 1;

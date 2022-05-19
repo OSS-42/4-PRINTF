@@ -28,8 +28,11 @@ int main()
 	unsigned long	p = 42;
 	unsigned long	*test1 = &p;
     void *test2 = (void*)0xffffffffffffffff;
-
-    c = 'S';    
+    int     q = 0;
+    int     r = -1;
+    int     t = 1;
+    int     u = 2147483647;
+ 
     printf("-------CHAR------\n");
     resultmine = ft_printf("Voici le resultat (mine): |%c|", c);
     printf(" - %d\n", resultmine);
@@ -45,6 +48,18 @@ int main()
     printf(" - %d\n", resultmine);
     resultreal = printf("Voici le resultat (real): |%i|", i);
     printf(" - %d\n", resultreal);
+    resultmine = ft_printf("Voici le resultat (mine): |%i|", q);
+    printf(" - %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%i|", q);
+    printf(" - %d\n", resultreal);
+    resultmine = ft_printf("Voici le resultat (mine): |%i|", r);
+    printf(" - %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%i|", r);
+    printf(" - %d\n", resultreal);
+    resultmine = ft_printf("Voici le resultat (mine): |%i|", t);
+    printf(" - %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%i|", t);
+    printf(" - %d\n", resultreal);
     printf("-------SPACE-------\n");
     resultmine = ft_printf("Voici le resultat (mine): |% i|", j);
     printf(" - %d\n", resultmine);
@@ -55,10 +70,14 @@ int main()
     printf(" - %d\n", resultmine);
     resultreal = printf("Voici le resultat (real): |%+i|", j);
     printf(" - %d\n", resultreal);
-    printf("--------INT_MIN-----\n");
+    printf("--------INT_MIN & MAX-----\n");
     resultmine = ft_printf("Voici le resultat (mine): |%i|", k);
     printf(" - %d\n", resultmine);
     resultreal = printf("Voici le resultat (real): |%i|", k);
+    printf(" - %d\n", resultreal);
+    resultmine = ft_printf("Voici le resultat (mine): |%i|", u);
+    printf(" - %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%i|", u);
     printf(" - %d\n", resultreal);
     printf("-------UINT_MAX----\n");
     resultmine = ft_printf("Voici le resultat (mine): |%u|", l);
@@ -106,6 +125,24 @@ int main()
     resultmine = ft_printf("Voici le resultat (mine): |%%|");
     printf(" - %d\n", resultmine);
     resultreal = printf("Voici le resultat (real): |%%|");
+    printf(" - %d\n", resultreal);  
+    printf("-------MULTIPLE----\n");
+    resultmine = ft_printf("Voici le resultat (mine): |%d%%|", n);
+    printf(" - %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%d%%|", n);
+    printf(" - %d\n", resultreal);  
+    resultmine = ft_printf("Voici le resultat (mine): |%s%d|", s, n);
+    printf(" - %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%s%d|", s, n);
+    printf(" - %d\n", resultreal);  
+    printf("-------UB Test----\n");
+    resultmine = ft_printf("Voici le resultat (mine): |% +d|", n);
+    printf(" - %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |% +d|", n);
+    printf(" - %d\n", resultreal);  
+    resultmine = ft_printf("Voici le resultat (mine): |%#s|", s);
+    printf(" - %d\n", resultmine);
+    resultreal = printf("Voici le resultat (real): |%#s|", s);
     printf(" - %d\n", resultreal);  
     return (0);
 }
