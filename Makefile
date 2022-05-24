@@ -1,6 +1,6 @@
 #VARIABLES
 
-NAME = libprintf.a
+NAME = libftprintf.a
 LIBFT = libft.a
 LDIR = libft/
 TDIR = tests/
@@ -12,11 +12,11 @@ RM = rm -f
 AR = ar rcs
 
 #COLORS
-LRED = \e[91m
-LGREEN = \e[92m
-LYELLOW = \e[93
-LMAGENTA = \e[95m
-LCYAN = \e[96m
+LRED = \033[91m
+LGREEN = \033[92m
+LYELLOW = \033[93
+LMAGENTA = \033[95m
+LCYAN = \033[96m
 DEF_COLOR = \033[0;39m
 
 #SOURCES
@@ -29,14 +29,16 @@ $(V).SILENT:
 
 all:	$(LDIR)/$(LIBFT) $(NAME)
 
-$(NAME): $(OBJ) $(LDIR)/$(LIBFT)
+$(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(SRC)
+	cp $(LDIR)$(LIBFT) $(NAME)
+	@echo "$(LGREEN)...and copied !$(DEF_COLOR)"
 	$(AR) $(NAME) $(OBJ)
-	@echo "$(LGREEN)Compilation terminée !$(DEF_COLOR)"
+	@echo "$(LGREEN)Compilation complete !$(DEF_COLOR)"
 
 $(LDIR)/$(LIBFT):
-	make -sC $(LDIR)
-	@echo "$(LGREEN)LIBFT réalisée !$(DEF_COLOR)"
+	make -C $(LDIR)
+	@echo "$(LGREEN)LIBFT done... !$(DEF_COLOR)"
 
 test1: $(LDIR)/$(LIBFT)
 	clear
@@ -57,13 +59,14 @@ bonus: all
 clean:
 	$(RM) $(OBJ)
 	$(RM) $(LDIR)*.o
-	@echo "$(LCYAN)Fichiers objets supprimés !$(DEF_COLOR)"
+	@echo "$(LCYAN)Objects files cleaned !$(DEF_COLOR)"
 
 fclean: clean
 	$(RM) $(NAME)
 	$(RM) $(LDIR)$(LIBFT)
+	$(RM) test
 	$(RM) *.o
-	@echo "$(LCYAN)Fichiers exécutables supprimés !$(DEF_COLOR)"
+	@echo "$(LCYAN)Executables files cleaned !$(DEF_COLOR)"
 
 re: fclean all
 

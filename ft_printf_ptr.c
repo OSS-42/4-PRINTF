@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.h"
+#include "ft_printf.h"
 
 static int	ft_size_ptr(uintptr_t nb)
 {
-	long	count;
+	int	count;
 
 	count = 1;
 	while (nb / 16 > 0)
@@ -27,22 +27,22 @@ static int	ft_size_ptr(uintptr_t nb)
 
 void	ft_print_ptoa(t_parameters *p, char *base)
 {
-	uintptr_t	i;
-	char		*j;
+	uintptr_t	ptr;
+	char		*add;
 	int			len;
 
-	i = va_arg(p->args, uintptr_t);
-	len = ft_size_ptr(i);
-	j = (char *)malloc(sizeof(char) * len + 1);
-	if (!j)
+	ptr = va_arg(p->args, uintptr_t);
+	len = ft_size_ptr(ptr);
+	add = ft_calloc(len + 1, 1);
+	if (!add)
 		return ;
-	j[len] = '\0';
+	add[len] = '\0';
 	p->size = p->size + write(1, "0x", 2) + len;
 	while (len--)
 	{
-		j[len] = base[i % 16];
-		ft_putstr_fd(j, 1);
-		i = i / 16;
+		add[len] = base[ptr % 16];
+		ft_putstr_fd(add, 1);
+		ptr = ptr / 16;
 	}
-	free(j);
+	free(add);
 }

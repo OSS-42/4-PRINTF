@@ -3,7 +3,7 @@
 	Test program for ft_printf, compares to printf
 */
 
-#include "../libprintf.h"
+#include "../ft_printf.h"
 
 #define default "\033[0m"
 #define black "\033[1;30m"
@@ -42,7 +42,7 @@ int main() {
 	int y = 0; 
 	char *test;
 
-	test = "";
+	test = "\0";
 	/*	Standard replacements	*/
 	TITLE("Main Functions");
 

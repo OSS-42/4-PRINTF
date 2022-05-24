@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libprintf.h"
+#include "../ft_printf.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <string.h>
 
 #define lred "\033[1;91m"
@@ -109,6 +110,11 @@ int main()
 	resultreal = printf("THE PRINTF : |%s| ", w);
 	printf(" %d <-> %d", resultmine, resultreal);
 	print_result(resultmine, resultreal);
+	resultreal = printf("THE PRINTF : |%s| ", NULL);
+	print_vs();
+	resultmine = ft_printf("YOUR PRINTF : |%s|", NULL);
+	printf(" %d <-> %d", resultmine, resultreal);
+	print_result(resultmine, resultreal);
 
 	TEST_NAME("INT");
 	resultmine = ft_printf("YOUR PRINTF : |%d|", i);
@@ -188,6 +194,16 @@ int main()
 	resultreal = printf("THE PRINTF : |%p| ", test2);
 	printf(" %d <-> %d", resultmine, resultreal);
 	print_result(resultmine, resultreal);
+	resultmine = ft_printf("YOUR PRINTF : |%p %p|", INT_MIN, INT_MAX);
+	print_vs();
+	resultreal = printf("THE PRINTF : |%p %p| ", INT_MIN, INT_MAX);
+	printf(" %d <-> %d", resultmine, resultreal);
+	print_result(resultmine, resultreal);
+	resultmine = ft_printf("YOUR PRINTF : |%p %p|", LONG_MIN, LONG_MAX);
+	print_vs();
+	resultreal = printf("\n THE PRINTF : |%p %p|", LONG_MIN, LONG_MAX) - 1;
+	printf(" %d <-> %d", resultmine, resultreal);
+	print_result(resultmine, resultreal);
 
 	TEST_NAME("PERCENT");
 	resultmine = ft_printf("YOUR PRINTF : |%%|");
@@ -196,7 +212,7 @@ int main()
 	printf(" %d <-> %d", resultmine, resultreal);
 	print_result(resultmine, resultreal);
 
-	TEST_NAME("MULTIPLE");
+	TEST_NAME("MIX");
 	resultmine = ft_printf("YOUR PRINTF : |%d%%|", n);
 	print_vs();
 	resultreal = printf("THE PRINTF : |%d%%| ", n);
@@ -206,6 +222,11 @@ int main()
 	print_vs();
 	resultreal = printf("THE PRINTF : |%d%s| ", n, x);
 	printf(" %d <-> %d", resultmine, resultreal);
+	print_result(resultmine, resultreal);
+	resultmine = ft_printf("YOUR PRINTF : |%%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%|", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0);
+	print_vs();
+	resultreal = printf("\n THE PRINTF : |%%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%|", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0) - 1;
+	printf(" %d <-> %d", resultreal, resultmine);
 	print_result(resultmine, resultreal);
 
 	TITLE("Bonus 2");

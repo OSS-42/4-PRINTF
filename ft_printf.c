@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.h"
+#include "ft_printf.h"
 
 static void	ft_conver_path(t_parameters *p, char *input, int pos)
 {
@@ -31,11 +31,6 @@ static void	ft_conver_path(t_parameters *p, char *input, int pos)
 	}
 	if (input[pos] == 'p')
 		ft_print_ptoa(p, "0123456789abcdef");
-	if (input[pos] == '%')
-	{
-		p->perc = 1;
-		ft_print_char(p);
-	}
 }
 
 static int	ft_isaconverter(char c)
@@ -51,24 +46,20 @@ static int	ft_check_input(t_parameters *p, char *input, int pos)
 	while (ft_isaconverter(input[pos]) != 1)
 	{
 		if (input[pos] == '#')
-		{
 			p->square = 1;
-			pos++;
-		}
 		if (input[pos] == ' ')
 		{
 			if (p->plus == 1)
 				p->space = 0;
 			else
 				p->space = 1;
-			pos++;
 		}
 		if (input[pos] == '+')
 		{
 			p->plus = 1;
 			p->space = 0;
-			pos++;
 		}
+		pos++;
 	}
 	ft_conver_path(p, input, pos);
 	return (pos);
@@ -80,8 +71,6 @@ int	ft_printf(const char *input, ...)
 	int				len;
 	t_parameters	*p;
 
-	if (input == NULL)
-		return (0);
 	p = ft_calloc(sizeof(t_parameters), 1);
 	va_start(p->args, input);
 	i = -1;
@@ -89,7 +78,11 @@ int	ft_printf(const char *input, ...)
 	while (input[++i])
 	{
 		if (input[i] == '%')
+		{
+			if (input[i + 1] == '%')
+				p->size = p->size + write(1, "%", 1);
 			i = ft_check_input(p, (char *)input, i + 1);
+		}
 		else
 			len = len + write(1, &input[i], 1);
 	}

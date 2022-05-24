@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.h"
+#include "ft_printf.h"
 
 static int	ft_size(long nb, int divider)
 {
@@ -35,10 +35,7 @@ void	ft_print_char(t_parameters *p)
 	char	c;
 
 	c = (char) va_arg(p->args, int);
-	if (p->perc == 1)
-		p->size = p->size + write(1, "%", 1);
-	else
-		p->size = p->size + write(1, &c, 1);
+	p->size = p->size + write(1, &c, 1);
 }
 
 void	ft_print_string(t_parameters *p)
@@ -47,6 +44,11 @@ void	ft_print_string(t_parameters *p)
 	int		i;
 
 	s = va_arg(p->args, char *);
+	if (!s)
+	{
+		p->size = p->size + write(1, "(null)", 6);
+		return ;
+	}
 	i = 0;
 	while (s[i])
 	{
@@ -75,16 +77,16 @@ void	ft_print_integer(t_parameters *p)
 
 void	ft_print_uhextoa(t_parameters *p, int divider, char *base)
 {
-	unsigned long	i;
-	char			*j;
-	int				len;
+	size_t	i;
+	char	*dest;
+	int		len;
 
-	i = va_arg(p->args, unsigned long);
+	i = (size_t)va_arg(p->args, unsigned int);
 	len = ft_size(i, divider);
-	j = (char *)malloc(sizeof(char) * len + 1);
-	if (!j)
+	dest = ft_calloc(len + 1, 1);
+	if (!dest)
 		return ;
-	j[len] = '\0';
+	dest[len] = '\0';
 	if (p->square == 1 && i != 0 && p->hexcap == 0)
 		p->size = p->size + write(1, "0x", 2);
 	if (p->square == 1 && i != 0 && p->hexcap == 1)
@@ -92,9 +94,10 @@ void	ft_print_uhextoa(t_parameters *p, int divider, char *base)
 	p->size = p->size + len;
 	while (len--)
 	{
-		j[len] = base[i % divider];
-		ft_putstr_fd(j, 1);
+		dest[len] = base[i % divider];
+		ft_putstr_fd(dest, 1);
 		i = i / divider;
 	}	
-	free(j);
+	free(dest);
 }
+
