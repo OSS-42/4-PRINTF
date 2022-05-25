@@ -68,11 +68,18 @@ void	ft_print_integer(t_parameters *p)
 		p->space = 0;
 	}
 	if (p->plus == 1 && p->neg == 0)
+	{
 		p->size = p->size + write(1, "+", 1);
+		p->plus = 0;
+	}
 	if (p->space == 1)
+	{
 		p->size = p->size + write(1, " ", 1);
+		p->space = 0;
+	}
 	ft_putnbr_fd(i, 1);
 	p->size = p->size + ft_size(i, 10);
+	p->neg = 0;
 }
 
 void	ft_print_uhextoa(t_parameters *p, int divider, char *base)
@@ -91,6 +98,7 @@ void	ft_print_uhextoa(t_parameters *p, int divider, char *base)
 		p->size = p->size + write(1, "0x", 2);
 	if (p->square == 1 && i != 0 && p->hexcap == 1)
 		p->size = p->size + write(1, "0X", 2);
+	p->square = 0;
 	p->size = p->size + len;
 	while (len--)
 	{
@@ -100,4 +108,3 @@ void	ft_print_uhextoa(t_parameters *p, int divider, char *base)
 	}	
 	free(dest);
 }
-
