@@ -32,11 +32,6 @@ void	ft_print_ptoa(t_parameters *p, char *base)
 	int			len;
 
 	ptr = va_arg(p->args, uintptr_t);
-	if (!ptr)
-	{
-		p->size = p->size + write(1, "(nil)", 5);
-		return ;
-	}
 	len = ft_size_ptr(ptr);
 	add = ft_calloc(len + 1, 1);
 	if (!add)
