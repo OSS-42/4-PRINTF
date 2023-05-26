@@ -1,6 +1,6 @@
 # 42-printf
 
-![FT_PRINTF](https://github.com/byaliego/42-project-badges/blob/main/badges/ft_printf-bonus.png)
+![FT_PRINTF](https://github.com/byaliego/42-project-badges/blob/main/badges/ft_printfm.png)
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/xDeadpoolx/4-PRINTF?style=for-the-badge)
 
